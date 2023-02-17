@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { 
     View,
     Text,
-    TouchableOpacity
+    TouchableOpacity,
+    ScrollView
 } from 'react-native';
 
 // styles
@@ -10,6 +11,7 @@ import styles from './styles';
 
 // components
 import MainHeader from '../../components/MainHeader';
+import TaskCard from '../../components/TaskCard';
 import Footer from '../../components/Footer';
 
 const Home = () => {
@@ -37,7 +39,24 @@ const Home = () => {
                 </TouchableOpacity>
             </View>
 
-            <Footer icon={'save'}/>
+            <View style={styles.title}>
+                <Text style={styles.titleText}>TAREFAS</Text>
+            </View>
+
+            <ScrollView style={styles.content} contentContainerStyle={{alignItems: 'center'}}>
+                <TaskCard done={false}/>
+                <TaskCard/>
+                <TaskCard/>
+                <TaskCard/>
+                <TaskCard/>
+                <TaskCard/>
+                <TaskCard/>
+                <TaskCard/>
+                <TaskCard/>
+                <TaskCard/>
+            </ScrollView>
+
+            <Footer icon={'add'}/>
         </View>
     );
 }
