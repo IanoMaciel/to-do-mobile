@@ -1,21 +1,34 @@
-import React, { useState } from 'react';
-import { 
-    View,
-    Text,
-    TouchableOpacity,
-    ScrollView
-} from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { ActivityIndicator, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 
+// components
+import Footer from '../../components/Footer';
+import MainHeader from '../../components/MainHeader';
+import TaskCard from '../../components/TaskCard';
+// API
+import api from '../../services/useApi';
 // styles
 import styles from './styles';
 
-// components
-import MainHeader from '../../components/MainHeader';
-import TaskCard from '../../components/TaskCard';
-import Footer from '../../components/Footer';
-
 const Home = () => {
     const [filter, setFilter] = useState('today');
+    const [tasks, setTasks] = useState([]); // [] -> collection
+    const [load, setLoad] = useState(false);
+
+
+    console.log(filter)
+
+
+    async function loadTask() {
+        setLoad(true)
+        await api.get(`/task/filter/${filter}/11:11:11:11:11:11`).then(response => {
+            setTasks(response.data)
+            setLoad(false)
+        });
+    }
+    useEffect(() => {
+        loadTask();
+    },[filter])
 
     return(
         <View style={styles.container}>
@@ -44,16 +57,22 @@ const Home = () => {
             </View>
 
             <ScrollView style={styles.content} contentContainerStyle={{alignItems: 'center'}}>
-                <TaskCard done={false}/>
-                <TaskCard/>
-                <TaskCard/>
-                <TaskCard/>
-                <TaskCard/>
-                <TaskCard/>
-                <TaskCard/>
-                <TaskCard/>
-                <TaskCard/>
-                <TaskCard/>
+                
+                {
+                    load 
+                    ?
+                    <ActivityIndicator color={'#EE6B26'} size={50}/>
+                    :
+                    tasks.map(item => (
+                        <TaskCard
+                            key={item.id}
+                            done={false}
+                            title={item.title}
+                            when={item.when}
+                            type={item.type}
+                        />
+                    ))
+                }
             </ScrollView>
 
             <Footer icon={'add'}/>
