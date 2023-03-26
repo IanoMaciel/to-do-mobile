@@ -9,7 +9,7 @@ import iconSport from '../assets/sport.png'
 import iconStudy from '../assets/study.png'
 import iconTravel from '../assets/travel.png'
 
-export default [
+const typesIcons = [
     null,
     iconDefault,
     iconFooteball,
@@ -21,3 +21,5 @@ export default [
     iconTravel,
     iconSport,
 ]
+
+export default typesIcons
