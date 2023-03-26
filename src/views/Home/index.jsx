@@ -14,25 +14,42 @@ const Home = () => {
     const [filter, setFilter] = useState('today');
     const [tasks, setTasks] = useState([]); // [] -> collection
     const [load, setLoad] = useState(false);
+    const [lateCount, setLateCount] = useState()
 
-
-    console.log(filter)
-
-
-    async function loadTask() {
+    //async function loadTask() 
+    const loadTask = async () => {
         setLoad(true)
-        await api.get(`/task/filter/${filter}/11:11:11:11:11:11`).then(response => {
-            setTasks(response.data)
-            setLoad(false)
+        await api.get(`/task/filter/${filter}/11:11:11:11:11:11`)
+            .then(response => {
+                setTasks(response.data)
+                setLoad(false)
         });
     }
+
+    const lateVerify = async () => {
+        await api.get(`/task/filter/late/11:11:11:11:11:11`)
+            .then(response => {
+                setLateCount(response.data.length)
+        })
+    }
+
+    const notification = () => {
+        setFilter('late')
+    }
+
     useEffect(() => {
-        loadTask();
+        loadTask()
+        lateVerify()
     },[filter])
 
     return(
         <View style={styles.container}>
-            <MainHeader showNotification={true} showBack={false}/>
+            <MainHeader 
+                showNotification={true}
+                showBack={false}
+                pressNotification={notification}
+                late={lateCount}
+            />
            
             <View style={styles.filter}>
                 <TouchableOpacity onPress={() => setFilter('all')}>
@@ -53,7 +70,7 @@ const Home = () => {
             </View>
 
             <View style={styles.title}>
-                <Text style={styles.titleText}>TAREFAS</Text>
+                <Text style={styles.titleText}>TAREFAS {filter === 'late' && 'ATRASADAS'}</Text>
             </View>
 
             <ScrollView style={styles.content} contentContainerStyle={{alignItems: 'center'}}>
