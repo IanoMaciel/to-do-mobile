@@ -1,21 +1,15 @@
 import React from 'react';
-import { 
-    View,
-    Image,
-    TouchableOpacity,
-    Text
-} from 'react-native';
+import { Image, Text, TouchableOpacity, View } from 'react-native';
 
+import back from '../../assets/back.png'
+import bell from '../../assets/bell.png';
+// icons
+import logo from '../../assets/logo.png';
+import qrcode from '../../assets/qrcode.png';
 // estilos
 import styles from './styles';
 
-// icons
-import logo from '../../assets/logo.png';
-import bell from '../../assets/bell.png';
-import qrcode from '../../assets/qrcode.png';
-import back from '../../assets/back.png'
-
-const MainHeader = ({showNotification, showBack}) => {
+const MainHeader = ({ showNotification, showBack, late, pressNotification }) => {
     return(
         <View style={styles.header}>
             {
@@ -30,11 +24,11 @@ const MainHeader = ({showNotification, showBack}) => {
             }
             <Image source={logo}  style={styles.logo}/>
             {
-                showNotification &&
-                <TouchableOpacity style={styles.notification}>
+                showNotification && late > 0 &&
+                <TouchableOpacity style={styles.notification} onPress={pressNotification}>
                     <Image source={bell} style={styles.notificationImage}/>
                     <View style={styles.notificationCircle}>
-                        <Text style={styles.notificationText}>3</Text>
+                        <Text style={styles.notificationText}>{late}</Text>
                     </View>
                 </TouchableOpacity>
             }

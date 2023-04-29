@@ -2,12 +2,12 @@ import { format } from 'date-fns'
 import React from "react";
 import { Image, Text, TouchableOpacity, View } from 'react-native';
 
-// icons 
-import iconsDefault from '../../assets/default.png';
+// list colletions icons
+import utils from '../../utils/typeIcons'
 // styles
 import styles from "./styles";
 
-const TaskCard = ({ done, title, when }) => {
+const TaskCard = ({ done, title, when, type }) => {
     const formattedDate = (when) => {
         var date = format(new Date(when), 'dd/MM/yyyy')
         var hours = format(new Date(when), 'h:mm')
@@ -20,7 +20,7 @@ const TaskCard = ({ done, title, when }) => {
     return(
         <TouchableOpacity style={[styles.card, done && styles.cardDone]}>
             <View style={styles.cardLeft}>
-                <Image source={iconsDefault} style={styles.cardLeftImage}/>
+                <Image source={utils[type]} style={styles.cardLeftImage}/>
                 <Text style={styles.cardLeftText}>{ title }</Text>
             </View>
             <View style={styles.cardRight}>
