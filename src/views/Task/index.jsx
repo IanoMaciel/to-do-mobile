@@ -12,26 +12,26 @@ import styles from './styles'
 export default function Task() {
     const [done, setDone] = useState(false)
 
-    return(
-        <KeyboardAvoidingView  behavior='padding' style={styles.container}>
-            <MainHeader showBack={true}/>
-            <ScrollView style={{width: '100%'}}>
-                <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={{marginVertical: 10}}>
+    return (
+        <KeyboardAvoidingView behavior='padding' style={styles.container}>
+            <MainHeader showBack={true} />
+            <ScrollView style={{ width: '100%' }}>
+                <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={{ marginVertical: 10 }}>
                     {
                         typeIcons.map((item) => (
                             item !== null &&
-                            <TouchableOpacity>
-                                <Image source={item} style={styles.imageIcons}/>
-                            </TouchableOpacity>    
+                            <TouchableOpacity key={item}>
+                                <Image source={item} style={styles.imageIcons} />
+                            </TouchableOpacity>
                         ))
                     }
                 </ScrollView>
                 <View style={styles.form}>
                     <Text style={styles.label}>Título</Text>
-                    <TextInput style={styles.input} maxLength={30} placeholder="Lembre-me de fazer..."/>
+                    <TextInput style={styles.input} maxLength={30} placeholder="Lembre-me de fazer..." />
 
                     <Text style={styles.label}>Detalhes</Text>
-                    <TextInput 
+                    <TextInput
                         style={styles.inputArea}
                         maxLength={200}
                         multiline={true}
@@ -40,7 +40,7 @@ export default function Task() {
 
                     <View style={styles.inLine}>
                         <View style={styles.inputInLine}>
-                            <Switch onValueChange={() => setDone(!done)} value={done} thumbColor={done ? "#00761b" : "#EE6B26"}/>
+                            <Switch onValueChange={() => setDone(!done)} value={done} thumbColor={done ? "#00761b" : "#EE6B26"} />
                             <Text style={styles.switchLabel}>Finalizada</Text>
                         </View>
                         <TouchableOpacity>
@@ -49,7 +49,7 @@ export default function Task() {
                     </View>
                 </View>
             </ScrollView>
-            <Footer icon={"save"}/>
+            <Footer icon={"save"} />
         </KeyboardAvoidingView>
     )
 }
